@@ -16,7 +16,7 @@ DECISION_CAUTIONS = """
 3. You need to know your available actions and available lanes before you make any decision.
 """
 
-SYSTEM_MESSAGE_PREFIX = """You are ChatGPT, a large language model trained by OpenAI. 
+SYSTEM_MESSAGE_PREFIX = """You are glm-4-air, a large language model trained by ZHIPU. 
 You are now act as a mature driving assistant, who can give accurate and correct advice for human driver in complex urban driving scenarios. 
 
 TOOLS:

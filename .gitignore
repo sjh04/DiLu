@@ -205,4 +205,6 @@ figs/
 
 results/
 memories/
-config.yaml
+20_mem/
+*.parquet
+*.sh

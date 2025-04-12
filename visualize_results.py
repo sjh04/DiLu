@@ -20,6 +20,12 @@ elif config['OPENAI_API_TYPE'] == 'openai':
     os.environ["OPENAI_API_TYPE"] = config['OPENAI_API_TYPE']
     os.environ["OPENAI_API_KEY"] = config['OPENAI_KEY']
     os.environ["OPENAI_CHAT_MODEL"] = config['OPENAI_CHAT_MODEL']
+elif config['OPENAI_API_TYPE'] == 'zhipu':
+    os.environ["OPENAI_API_TYPE"] = config['OPENAI_API_TYPE']
+    os.environ["ZHIPUAI_API_KEY"] = config['ZHIPUAI_API_KEY']
+    os.environ["ZHIPUAI_MODEL"] = config['ZHIPUAI_CHAT_MODEL']
+    os.environ["ZHIPUAI_API_BASE"] = config['ZHIPU_API_BASE']
+    
 else:
     raise ValueError("Unknown OPENAI_API_TYPE, should be azure or openai")
 

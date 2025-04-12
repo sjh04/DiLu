@@ -5,8 +5,11 @@ from rich import print
 from typing import List
 
 from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
-from langchain.schema import AIMessage, HumanMessage, SystemMessage
-from langchain.callbacks import get_openai_callback, OpenAICallbackHandler, StreamingStdOutCallbackHandler
+from langchain_community.chat_models import ChatZhipuAI
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_community.callbacks import get_openai_callback, OpenAICallbackHandler#, StreamingStdOutCallbackHandler
+from langchain_core.callbacks.manager import CallbackManager
+from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHandler#, OpenAICallbackHandler
 
 from dilu.scenario.envScenario import EnvScenario
 
@@ -75,12 +78,22 @@ class DriverAgent:
                 request_timeout=60,
                 streaming=True,
             )
+        elif oai_api_type == "zhipu":
+            print("Use ZHIPU API")
+            self.llm = ChatZhipuAI(
+                temperature=temperature,
+                model="glm-4",
+                callback_manager=CallbackManager(
+                    [StreamingStdOutCallbackHandler()]
+                ),
+                streaming=True
+            )
 
     def few_shot_decision(self, scenario_description: str = "Not available", previous_decisions: str = "Not available", available_actions: str = "Not available", driving_intensions: str = "Not available", fewshot_messages: List[str] = None, fewshot_answers: List[str] = None):
         # for template usage refer to: https://python.langchain.com/docs/modules/model_io/prompts/prompt_templates/
 
         system_message = textwrap.dedent(f"""\
-        You are ChatGPT, a large language model trained by OpenAI. Now you act as a mature driving assistant, who can give accurate and correct advice for human driver in complex urban driving scenarios.
+        You are glm-4-air, a large language model trained by ZHIPU. Now you act as a mature driving assistant, who can give accurate and correct advice for human driver in complex urban driving scenarios.
         You will be given a detailed description of the driving scenario of current frame along with your history of previous decisions. You will also be given the available actions you are allowed to take. All of these elements are delimited by {delimiter}.
 
         Your response should use the following format:
@@ -131,9 +144,13 @@ class DriverAgent:
         # print(response.content)
         print("[cyan]Agent answer:[/cyan]")
         response_content = ""
-        for chunk in self.llm.stream(messages):
-            response_content += chunk.content
-            print(chunk.content, end="", flush=True)
+        # response_content = self.llm.invoke(messages).content
+        # print(response_content)
+        response_content = self.llm(messages).content
+        print("Response content:", response_content)
+        # for chunk in self.llm(messages):
+        #     response_content += chunk.content
+        #     print(chunk.content, end="", flush=True)
         print("\n")
         decision_action = response_content.split(delimiter)[-1]
         try:

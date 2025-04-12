@@ -1,7 +1,8 @@
 import os
 import textwrap
 from langchain.vectorstores import Chroma
-from langchain.embeddings.openai import OpenAIEmbeddings
+# from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_community.embeddings import ZhipuAIEmbeddings, OpenAIEmbeddings
 from langchain.docstore.document import Document
 
 from dilu.scenario.envScenario import EnvScenario
@@ -20,6 +21,10 @@ class DrivingMemory:
                     deployment=os.environ['AZURE_EMBED_DEPLOY_NAME'], chunk_size=1)
             elif os.environ["OPENAI_API_TYPE"] == 'openai':
                 self.embedding = OpenAIEmbeddings()
+            elif os.environ["OPENAI_API_TYPE"] == 'zhipu':
+                self.embedding = ZhipuAIEmbeddings(model='embedding-3', api_key=os.environ['ZHIPUAI_API_KEY'], dimensions=1536)
+                # self.embedding = OpenAIEmbeddings(model='glm-4-air', api_key=os.environ['ZHIPUAI_API_KEY'],
+                #                                   chunk_size=1, base_url=os.environ['ZHIPUAI_API_BASE'])
             else:
                 raise ValueError(
                     "Unknown OPENAI_API_TYPE: should be azure or openai")

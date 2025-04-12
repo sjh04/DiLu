@@ -2,6 +2,7 @@ import os
 import textwrap
 import time
 from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
+from langchain_community.chat_models import ChatZhipuAI
 from langchain.schema import HumanMessage, SystemMessage
 
 from rich import print
@@ -28,11 +29,19 @@ class ReflectionAgent:
                 max_tokens=1000,
                 request_timeout=60,
             )
+        elif oai_api_type == "zhipu":
+            print("Using Zhipu Chat API")
+            self.llm = ChatZhipuAI(
+                temperature=temperature,
+                model_name='glm-4-air',
+                max_tokens=1000,
+                request_timeout=60,
+            )
 
     def reflection(self, human_message: str, llm_response: str) -> str:
         delimiter = "####"
         system_message = textwrap.dedent(f"""\
-        You are ChatGPT, a large language model trained by OpenAI. Now you act as a mature driving assistant, who can give accurate and correct advice for human driver in complex urban driving scenarios.
+        You are glm-4-air, a large language model trained by ZHIPU. Now you act as a mature driving assistant, who can give accurate and correct advice for human driver in complex urban driving scenarios.
         You will be given a detailed description of the driving scenario of current frame along with the available actions allowed to take. 
 
         Your response should use the following format:

@@ -40,18 +40,23 @@ DiLu is not just a framework, it's an exploration of [Knowledge-driven Autonomou
 For an optimal experience, we recommend using conda to set up a new environment for DiLu.
 
 ```bash
-conda create -n dilu python=3.8 
+conda activate your_environment_name
+```
+
+or
+```bash
+conda create -n dilu python=3.9 
 conda activate dilu
 pip install -r requirements.txt
 ```
 
-📝 **Note:** DiLu requires specific versions of certain libraries **(i.e. `langchain==0.0.335`, `openai==0.28.1`, `chromadb==0.3.29`)**, Please adhere to the versions specified in  `requirements.txt`.
+📝 **Note:** DiLu requires specific versions of certain libraries **(i.e. `openai==0.28.1`, `chromadb==1.0.4`, `langchain-community==0.3.21`, `zhipuai==2.1.5.20250410`)**, Please adhere to the versions specified in  `requirements.txt`.
 
 ### 2. Configuration ⚙️ 
 
 All configurable parameters are located in `config.yaml`.
 
-Before running DiLu, set up your OpenAI API keys. DiLu supports both OpenAI and Azure Openai APIs. 
+Before running DiLu, set up your OpenAI API keys. DiLu supports both OpenAI and Azure Openai APIs. Also supports ZHIPU API now.
 
 Configure as below in `config.yaml`:
 ```yaml
@@ -65,6 +70,10 @@ AZURE_API_VERSION: "2023-07-01-preview"
 AZURE_API_KEY: #'xxxxxxx'
 AZURE_CHAT_DEPLOY_NAME: # chat model deployment name
 AZURE_EMBED_DEPLOY_NAME: # text embed model deployment name  
+# below are for ZHIPU
+ZHIPUAI_API_KEY: 'your_zhipuai_api_key' # 'xxxxxx'
+ZHIPUAI_CHAT_MODEL: 'glm-4-air' # Alternative models: 'glm-4-air' or 'glm-4'
+ZHIPU_API_BASE: # 'https://open.bigmodel.cn/api/paas/v4/chat/completions'
 ```
 
 
