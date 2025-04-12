@@ -40,7 +40,8 @@ DiLu is not just a framework, it's an exploration of [Knowledge-driven Autonomou
 For an optimal experience, we recommend using conda to set up a new environment for DiLu.
 
 ```bash
-conda activate your_environment_name
+conda env create -f environment.yml
+conda activate dilu
 ```
 
 or
