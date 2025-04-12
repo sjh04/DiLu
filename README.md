@@ -61,7 +61,7 @@ Before running DiLu, set up your OpenAI API keys. DiLu supports both OpenAI and 
 
 Configure as below in `config.yaml`:
 ```yaml
-OPENAI_API_TYPE: # 'openai' or 'azure'
+OPENAI_API_TYPE: # 'openai' or 'azure' or 'zhipu'
 # below are for Openai
 OPENAI_KEY: # 'sk-xxxxxx' 
 OPENAI_CHAT_MODEL: 'gpt-4-1106-preview' # Alternative models: 'gpt-3.5-turbo-16k-0613' (note: performance may vary)
